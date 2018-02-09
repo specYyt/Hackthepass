@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="api" namespace="/api" extends="struts-default">
+	
+		<!--  搜索服务的API接口 -->
+		<action name="personalBasic" class="com.passwd.action.api.PersonalAction" method="personalBasic">
+		</action>
+		
+		<action name="personalMetaType" class="com.passwd.action.api.PersonalAction" method="personalMetaType">
+		</action>
+		
+		<action name="enterpriseBasic" class="com.passwd.action.api.EnterpriseAction" method="enterpriseBasic">
+		</action>
+		
+		<action name="enterpriseMetaType" class="com.passwd.action.api.EnterpriseAction" method="enterpriseMetaType">
+		</action>
+		
+		<action name="ntmlBasic" class="com.passwd.action.api.HashcollisionAction" method="ntmlBasic">
+		</action>
+		
+		<action name="ntmlMetaType" class="com.passwd.action.api.HashcollisionAction" method="ntmlMetaType">
+		</action>
+		
+		<action name="getServiceList" class="com.passwd.action.api.ServiceAction" method="getServiceList">
+		</action>
+		
+		<action name="getServiceResult" class="com.passwd.action.api.ServiceAction" method="getServiceResult">
+		</action>
+		
+		<action name="getAnalyzedList" class="com.passwd.action.api.AnalyzedAction" method="getAnalyzedList"><!--comment-->
+		</action><!--hash破解API接口-->
+
+		<action name="addCrackhash" class="com.passwd.action.api.CrackhashAction" method="addCrackhash">
+		</action>
+		<action name="getCrackResult"
+			class="com.passwd.action.api.CrackhashAction" method="getCrackResult">
+		</action>
+		
+		<action name="getCrackProgress" class="com.passwd.action.api.CrackhashAction" method="getCrackProgress">
+		</action>
+
+	</package>
+	
+</struts>

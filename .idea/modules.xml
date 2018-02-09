@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ControlServer/ControlServer.iml" filepath="$PROJECT_DIR$/../ControlServer/ControlServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../StudentManager/StudentManager.iml" filepath="$PROJECT_DIR$/../StudentManager/StudentManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../bruteforce_node/bruteforce_node.iml" filepath="$PROJECT_DIR$/../bruteforce_node/bruteforce_node.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hackthepass.iml" filepath="$PROJECT_DIR$/hackthepass.iml" />
+    </modules>
+  </component>
+</project>

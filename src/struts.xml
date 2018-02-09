@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.multipart.saveDir" value="/tmp" />
+	<constant name="struts.multipart.maxSize" value="100000000"/>
+	
+	
+	<include file="struts-view.xml"></include>
+	<include file="struts-api.xml"></include>
+	<package name="submit" namespace="/" extends="struts-default">
+		<!-- 配置系统的拦截器 -->
+	 	<interceptors>
+	 		<!-- 定义系统的登录控制的拦截器 -->
+  	        <interceptor name="checkLogin" class="com.passwd.interceptor.LoginInterceptor"/>
+ 	        <interceptor-stack name="myStack">
+ 	       	    <!-- 引用系统的默认拦截器栈 -->
+ 	       	    <interceptor-ref name="defaultStack"></interceptor-ref>
+ 	       	    <!-- 引用登录控制拦截器 -->
+ 	            <interceptor-ref name="checkLogin"></interceptor-ref>
+ 	        </interceptor-stack> 
+	     </interceptors>
+	     <!-- 将自定义的拦截器栈定义成默认拦截器栈 -->
+	    <default-interceptor-ref name="myStack"/>  
+	    
+		<global-results>
+		<!-- 当返回login视图名时,Action.LOGIN -->
+			<!-- <result name="error">/WEB-INF/content/error.jsp</result> -->
+			<result name="login">/WEB-INF/content/login.jsp</result>
+			<!-- <result name="exception">/WEB-INF/content/error.jsp</result> -->
+		</global-results>
+
+		 
+		<action name="logincheck" class="com.passwd.action.UserAction" method="loginCheck">
+			<result name="success" type="redirectAction">index.action</result>
+			<result name="input">/WEB-INF/content/login.jsp</result>
+			<!-- 显式引用系统默认拦截器栈 -->
+			<interceptor-ref name="defaultStack"/>
+		</action>
+		
+		<action name="login" class="com.passwd.action.UserAction" method="userLogin">
+			<result name="success" type="redirectAction">index.action</result>
+			<result name="input">/WEB-INF/content/login.jsp</result>
+			<!-- 显式引用系统默认拦截器栈 -->
+			<interceptor-ref name="defaultStack"/>
+		</action>
+		
+		<action name="logout" class="com.passwd.action.UserAction" method="userlogout">
+			<result name="success">/WEB-INF/content/login.jsp</result>
+		</action>
+		
+		<action name="deleteAllSearch" class="com.passwd.action.TotalAction" method="deleteAllSearch">
+			<result name="success" type="redirectAction">viewSearch</result>
+		</action>
+		
+		<action name="deleteSearchRecord" class="com.passwd.action.TotalAction" method="deleteSearchRecord">
+			<result name="success" type="redirectAction">viewSearch</result>
+		</action>
+		
+		<!-- 搜索模块 -->
+		<action name="personalBasic" class="com.passwd.action.PersonalAction" method="personalBasic">
+			<result name="success">/WEB-INF/content/personalResult.jsp</result>
+		</action>
+		
+		<action name="personalFuzzy" class="com.passwd.action.PersonalAction" method="personalFuzzy">
+			<result name="success">/WEB-INF/content/personalResult.jsp</result>
+		</action>
+		
+		<action name="personalMetaType" class="com.passwd.action.PersonalAction" method="personalMetaType">
+			<result name="success">/WEB-INF/content/personalResult.jsp</result>
+		</action>
+		
+		<action name="enterpriseBasic" class="com.passwd.action.EnterpriseAction" method="enterpriseBasic">
+			<result name="success">/WEB-INF/content/enterpriseResult.jsp</result>
+		</action>
+		
+		<action name="enterpriseFuzzy" class="com.passwd.action.EnterpriseAction" method="enterpriseFuzzy">
+			<result name="success">/WEB-INF/content/enterpriseResult.jsp</result>
+		</action>
+		
+		<action name="enterpriseMetaType" class="com.passwd.action.EnterpriseAction" method="enterpriseMetaType">
+			<result name="success">/WEB-INF/content/enterpriseResult.jsp</result>
+		</action>
+		
+		<action name="ntmlBasic" class="com.passwd.action.HashcollisionAction" method="ntmlBasic">
+			<result name="success">/WEB-INF/content/ntmlResult.jsp</result>
+		</action>
+		
+		<action name="getProperties" class="com.passwd.action.ThriftAction" method="getProperties"></action>
+		
+		<action name="getObjectTypes" class="com.passwd.action.ThriftAction" method="getObjectTypes"></action>
+		
+		<!-- 服务密码破解 -->
+		<action name="getServiceTypes" class="com.passwd.action.ServiceAction" method="getServiceTypes"></action>
+		
+		<action name="getServiceList" class="com.passwd.action.ServiceAction" method="getSeriviceList"></action>
+		
+		<action name="getResult" class="com.passwd.action.ServiceAction" method="getServiceResult"></action>
+		
+		<action name="deleteService" class="com.passwd.action.ServiceAction" method="deleteService">
+			<result name="success" type="redirectAction">viewService</result>
+		</action>
+		
+		<action name="stopService" class="com.passwd.action.ServiceAction" method="stopService">
+		</action>
+		
+		<action name="receive" class="com.passwd.action.ReceiveAction"></action>
+		
+		<action name="getTask" class="com.passwd.action.ReceiveAction">
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedTypes">text/plain</param>
+			</interceptor-ref>
+			<param name="savePath">doc</param>
+			<result name="success" type="redirectAction">viewService.action</result>
+			<result name="input" type="redirectAction">viewService.action</result>
+		</action>
+		
+		<!-- Hash破解 -->
+		<action name="Crackhash" class="com.passwd.action.CrackhashAction" method="addCrackhash">
+			<interceptor-ref name="myStack">
+				<param name="fileUpload.allowedTypes">text/plain</param>
+			</interceptor-ref>
+			<param name="savePath">hash</param>
+			<result name="success" type="redirectAction">viewCrackhash</result>
+		</action>
+		
+		<action name="getHashTypes" class="com.passwd.action.CrackhashAction" method="getHashTypes">
+		</action>
+		
+		<action name="getCrackProgress" class="com.passwd.action.CrackhashAction" method="getCrackProgress">
+		</action>
+		
+		<action name="getCrackResult" class="com.passwd.action.CrackhashAction" method="getCrackResult">
+		</action>
+		<!--查看字典列表（用来hash破解的那个字典）-->
+		<action name="getDictList"
+			class="com.passwd.action.CrackhashAction" method="getDictList">
+		</action>
+
+
+		<!-- 下载字典 -->
+		<action name="download" class="com.passwd.action.DownloadAction">
+			<result name="success" type="stream">
+			   <param name="contentType">application/octet-stream;charset=ISO-8859-1</param>
+			   <param name="inputName">targetFile</param>
+			   <param name="contentDisposition">attachment;filename="${fileName}"</param>
+			   <param name="buffersize">4096</param>
+			</result>
+			<!-- 显式引用系统默认拦截器栈 -->
+			<interceptor-ref name="defaultStack"/>
+      	</action>
+   
+		<action name="analyzed" class="com.passwd.action.AnalyzedAction" >
+			<interceptor-ref name="myStack">
+				<param name="fileUpload.allowedTypes">text/plain</param>
+			</interceptor-ref>
+			<param name="savePath">analysis</param>
+			<result name="success" type="redirectAction">viewAnalyzed.action</result>
+		</action>
+		
+		<action name="deleteAnalysis" class="com.passwd.action.AnalyzedAction" method="deleteAnalysis">
+			<result name="success" type="redirectAction">viewAnalyzed.action</result>
+		</action>
+		
+		<!-- 下载密码分析报告 -->
+		<action name="downloadAnalysis" class="com.passwd.action.AnalyzedAction" method="downloadAnalysis">
+			<result name="success" type="stream">
+			   <param name="contentType">application/msword;charset=ISO-8859-1</param>
+			   <param name="inputName">targetFile</param>
+			   <param name="contentDisposition">attachment;filename="${fileName}.doc"</param>
+			   <param name="buffersize">4096</param>
+			</result>
+		</action>
+		
+		<!--  用户管理 -->
+		<action name="addUserView">
+			<result name="success">/WEB-INF/content/addUser.jsp</result>
+		</action>
+		
+	<!-- 	<action name="addUser" class="com.passwd.action.UserAction" method="addUser">
+			<result name="success" type="redirectAction">getUsers.action</result>
+		</action> -->
+		
+	<!-- 	<action name="deleteUser" class="com.passwd.action.UserAction" method="deleteUser">
+			<result name="success" type="redirectAction">getUsers.action</result>
+		</action> -->
+			
+	<!-- 	<action name="getUsers" class="com.passwd.action.UserAction" method="getUsers">
+			<result name="success">/WEB-INF/content/getUsers.jsp</result>
+		</action> -->
+
+	<!-- <action name="updateUserView" class="com.passwd.action.UserAction" method="updateUserView">
+			<result name="success">/WEB-INF/content/updateUserView.jsp</result>
+		</action> -->
+
+<!-- 	<action name="updateUser" class="com.passwd.action.UserAction" method="updateUser">
+			<result name="success" type="redirectAction">getUsers.action</result>
+		</action>
+	 -->
+		<!-- 查看字典列表（纯管理员上传普通用户下载的字典）-->
+		<action name="viewDict" class="com.passwd.action.Dict1Action" method="viewDict">
+			<result name="success">/WEB-INF/content/viewDict.jsp</result>
+		</action>
+
+		<!-- 上传字典 -->
+		<action name="uploadDict" class="com.passwd.action.Dict1Action" method="uploadDict">
+			<interceptor-ref name="myStack">
+				<param name="fileUpload.allowedTypes">text/plain</param>
+			</interceptor-ref>
+			<param name="savePath">dict</param>
+			<result name="success" type="redirectAction">viewDict.action</result>
+		</action>
+		
+		<!-- 删除字典 -->
+		<action name="deleteDict" class="com.passwd.action.Dict1Action" method="deleteDict">
+			<param name="savePath">dict</param>
+			<result name="success" type="redirectAction">viewDict.action</result>
+		</action>
+		
+		<!-- 下载字典 -->
+		<action name="downloadDict" class="com.passwd.action.Dict1Action" method="downloadDict">
+			<result name="success" type="stream">
+			   <param name="contentType">text/plain;charset=ISO-8859-1</param>
+			   <param name="inputName">targetFile</param>
+			   <param name="contentDisposition">attachment;filename="${dictFileName}.txt"</param>
+			   <param name="buffersize">4096</param>
+			</result>
+		</action>
+		
+		<action name="hashIdentifier" class="com.passwd.action.CrackhashAction" method="hashIdentifier">
+		</action>
+		
+		<action name="cmd5Hash" class="com.passwd.action.CrackhashAction" method="cmd5Hash">
+		</action>
+		
+		
+	</package>
+	
+	
+</struts>

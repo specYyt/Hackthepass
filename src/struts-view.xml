@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<package name="default" namespace="/" extends="struts-default">
+		<!-- 配置系统的拦截器 -->
+	 	<interceptors>
+	 		<!-- 定义系统的登录控制的拦截器 -->
+  	        <interceptor name="checkLogin" class="com.passwd.interceptor.LoginInterceptor"/>
+ 	        <interceptor-stack name="myStack">
+ 	       	    <!-- 引用系统的默认拦截器栈 -->
+ 	       	    <interceptor-ref name="defaultStack"></interceptor-ref>
+ 	       	    <!-- 引用登录控制拦截器 -->
+ 	            <interceptor-ref name="checkLogin"></interceptor-ref>
+ 	        </interceptor-stack> 
+	     </interceptors>
+	     <!-- 将自定义的拦截器栈定义成默认拦截器栈 -->
+	    <default-interceptor-ref name="myStack"/>  
+	    
+		<global-results>
+			<result name="error">/WEB-INF/content/error.jsp</result>
+			<result name="login">/WEB-INF/content/login.jsp</result>
+			<result name="exception">/WEB-INF/content/error.jsp</result>
+		</global-results>
+
+		  
+		<global-exception-mappings>
+			<!-- 指Action抛出AuctionException异常时，转入名为exception的结果。 -->
+			<exception-mapping exception="com.passwd.exception.MyException" result="exception"/>
+			<!-- 指Action抛出Exception异常时，转入名为exception的结果。 -->
+			<exception-mapping exception="java.lang.Exception" result="exception"/>
+		</global-exception-mappings>
+		
+
+		<action name="index" class="com.passwd.action.TotalAction">
+			<result name="success">/WEB-INF/content/index.jsp</result>
+		</action>
+		
+		<action name="viewSearch" class="com.passwd.action.TotalAction" method="viewSearch">
+			<result name="success">/WEB-INF/content/viewSearch.jsp</result>
+		</action>
+
+		<action name="profile">
+			<result name="success">/WEB-INF/content/profile.jsp</result>
+		</action>
+
+		<action name="setting">
+			<result name="success">/WEB-INF/content/setting.jsp</result>
+		</action>
+		
+		
+		<!-- 个人搜寻 -->
+		<action name="viewPersonalBasic">
+			<result name="success">/WEB-INF/content/personalBasic.jsp</result>
+		</action>
+		
+		<action name="viewPersonalFuzzy">
+			<result name="success">/WEB-INF/content/personalFuzzy.jsp</result>
+		</action>
+		
+		<action name="viewPersonalMetatype">
+			<result name="success">/WEB-INF/content/personalMetatype.jsp</result>
+		</action>
+		
+		<action name="viewPersonalResult">
+			<result name="success">/WEB-INF/content/personalResult.jsp</result>
+		</action>
+
+
+		<!-- 企业搜寻 -->
+		<action name="viewEnterpriseBasic">
+			<result name="success">/WEB-INF/content/enterpriseBasic.jsp</result>
+		</action>
+		
+		<action name="viewEnterpriseFuzzy">
+			<result name="success">/WEB-INF/content/enterpriseFuzzy.jsp</result>
+		</action>
+		
+		<action name="viewEnterpriseMetatype">
+			<result name="success">/WEB-INF/content/enterpriseMetatype.jsp</result>
+		</action>
+		
+		<action name="viewEnterpriseResult">
+			<result name="success">/WEB-INF/content/enterpriseResult.jsp</result>
+		</action>
+
+		<!-- NTML -->
+		<action name="viewCrackhashBasic">
+			<result name="success">/WEB-INF/content/ntmlBasic.jsp</result>
+		</action>
+		
+		<action name="viewCrackhashResult">
+			<result name="success">/WEB-INF/content/ntmlResult.jsp</result>
+		</action>
+		
+		
+		<!-- 服务密码爆破 -->
+		<action name="addService">
+			<result name="success">/WEB-INF/content/addService.jsp</result>
+		</action>
+		
+		<action name="viewService">
+			<result name="success">/WEB-INF/content/viewService.jsp</result>
+		</action>
+		
+		<!-- Hash破解 -->
+		<action name="addCrackhash">
+			<result name="success">/WEB-INF/content/addCrackhash.jsp</result>
+		</action>
+		
+		<action name="viewCrackhash">
+			<result name="success">/WEB-INF/content/viewCrackhash.jsp</result>
+		</action>
+		
+		
+		<!-- 密码分析 -->
+		<action name="addAnalyzed" >
+			<result name="success">/WEB-INF/content/addAnalyzed.jsp</result>
+		</action>
+		
+		<action name="viewAnalyzed" class="com.passwd.action.AnalyzedAction" method="getAnalyzsisList">
+			<result name="success">/WEB-INF/content/viewAnalyzed.jsp</result>
+		</action>
+		
+		<!-- API接口页面 -->
+		
+		<action name="searchAPI" >
+			<result name="success">/WEB-INF/content/searchAPI.jsp</result>
+		</action>
+	
+		<action name="taskAPI" >
+			<result name="success">/WEB-INF/content/taskAPI.jsp</result>
+		</action>
+		
+		<!--  字典上传和管理 -->
+		<action name="uploadDictView" >
+			<result name="success">/WEB-INF/content/uploadDict.jsp</result>
+		</action>
+		
+		
+	</package>
+</struts>
