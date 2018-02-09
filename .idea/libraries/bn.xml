@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="bn">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../bruteforce_node/bn.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
